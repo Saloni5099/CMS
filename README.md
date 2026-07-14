@@ -1,111 +1,132 @@
-# Clinic-Management
-A Seemless communication with Doctor and Receptionist Using MERN Stack
+# 🏥 Clinic Management System
+
+A full-stack clinic management system enabling seamless communication between doctors and receptionists — built with the MERN stack (MongoDB, Express, React, Node.js).
+
+**🔗 Live Demo:** [https://cms-oe8d.onrender.com](#) *(replace with your Vercel frontend link)*
+**📦 Repository:** [github.com/Saloni5099/clinic_management_sys](https://github.com/Saloni5099/clinic_management_sys)
+
+---
+
+## Tech Stack
+
+**Frontend:** React, React Router, Axios, React Hot Toast
+**Backend:** Node.js, Express.js, Mongoose
+**Database:** MongoDB Atlas
+**Auth/Security:** bcrypt (password hashing), Joi (validation)
+**Deployment:** Vercel (frontend), Render (backend), MongoDB Atlas (database)
+
+---
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Workflow](#workflow)
-- [Usage](#usage)
 - [Features](#features)
+- [Workflow](#workflow)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Screenshots](#screenshots)
 
-# Installation
-1.Clone the repository:
+---
 
-    git clone https://github.com/Saloni5099/clinic_management_sys
+## Features
 
-2.Navigate to the project folder:
+1. **Multi-User Roles**
+   Separate portals and permissions for Receptionist and Doctor.
 
-    cd clinic_management_sys
+2. **Patient Records**
+   Maintains electronic health records per patient, including allergies, past illnesses, and surgeries.
 
-3.Navigate to the frontend folder:
+3. **Token-Based Queue System**
+   Each patient gets a unique token ID at registration, used to track their visit across the receptionist and doctor workflow.
 
-    cd client
+4. **Prescription History**
+   Doctors can view a patient's full prescription history before consultation.
 
-4.Navigate to the backend folder:
+5. **Billing**
+   Receptionist generates billing based on consultation and prescribed medication.
 
-    cd server
+6. **Flexible Patient Retrieval**
+   - If a patient visits later than expected (e.g. next day), the same token ID still works.
+   - If the token ID is lost, patient details can be retrieved using their phone number instead.
 
-5.Install dependencies:
+---
 
-    npm install
+## Workflow
 
-6.Set up the MongoDB database:
-    Create a MongoDB Atlas account or set up a local MongoDB instance.
-    Update the MongoDB connection string in the server/db.js file.
-
-Start the application:
-  You need to start the application in both server and client simultaneously
-  By using the following command in both client and server folder
-    npm run start
-
-# Workflow
-
-### 1. Patient Registration and Token Generation
-
-- The patient visits the receptionist and provides necessary details.
-- The receptionist generates a unique token ID for the patient.
+### 1. Patient Registration & Token Generation
+The patient visits the receptionist and shares their details. The receptionist registers them and generates a unique token ID.
 
 ### 2. Doctor Consultation
-
-- The doctor accesses the patient's token ID to view previous prescriptions and medical history.
-- After consultation, the doctor provides a new prescription.
+The doctor looks up the patient using their token ID, views prior prescriptions/history, and adds a new prescription after consultation.
 
 ### 3. Billing
+The receptionist retrieves the patient's token ID, reviews the consultation and prescribed medication, and generates the final bill.
 
-- The receptionist performs billing using the patient's token ID.
-- Billing includes details of the prescribed medication and doctor's consultation.
+---
 
-# Usage
+## Installation
 
-### 1. Receptionist Login:
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- A [MongoDB Atlas](https://www.mongodb.com/atlas) account (or a local MongoDB instance)
 
-- Login to the receptionist panel using the credentials:
-  - Email: `max@gmail.com`
-  - Password: `Yash@123`
-- Navigate to the patient registration section.
+### 1. Clone the repository
+```bash
+git clone https://github.com/Saloni5099/clinic_management_sys
+cd clinic_management_sys
+```
 
-### 2. Generate Token:
+### 2. Backend setup
+```bash
+cd server
+npm install
+```
 
-- Register new patients by entering their details.
-- Generate a unique token ID for the patient.
-- Provide patients with the generated token ID for future consultations.
+Create a `.env` file inside `server/` with:
+```env
+MONGO_URI=your_mongodb_connection_string
+SALT=10
+```
 
-### 3. Doctor Login:
+Start the backend:
+```bash
+npm start
+```
+Server runs on `http://localhost:3006` by default.
 
-- Access the doctor's panel with the following credentials:
-  - Email: `saloni1@gmail.com`
-  - Password: `Saloni@123 `
+### 3. Frontend setup
+Open a new terminal:
+```bash
+cd client
+npm install
+```
 
-### 4. Retrieve Patient Information:
+Create a `.env` file inside `client/` with:
+```env
+REACT_APP_API_BASE_URL=http://localhost:3006
+```
 
-- Enter the patient's token ID to access their medical history and previous prescriptions.
-- Consult with the patient and provide a new prescription.
+Start the frontend:
+```bash
+npm start
+```
+App runs on `http://localhost:3000` by default.
 
-### 5. Prescription Details:
+---
 
-- The prescription includes details about prescribed medications, recommended treatments, and any additional notes.
+## Usage
 
-### 6. Receptionist Billing:
+> ⚠️ No demo accounts are publicly listed here for security. To try the app, register a new Doctor and Receptionist account from the sign-up screen, then log in with those credentials.
 
-- Login to the receptionist panel.
-- Retrieve patient details using the token ID.
-- Review the doctor's prescribed information and patient's medical history.
-- Enter billing details, including the consultation fee and prescribed medications cost.
-- Confirm the billing transaction.
+### Receptionist
+1. Sign up / log in to the receptionist panel.
+2. Register a new patient and generate a unique token ID.
+3. Share the token ID with the patient for future visits.
+4. After the doctor's consultation, retrieve the patient via token ID (or phone number) to generate the bill.
 
-# Features
+### Doctor
+1. Sign up / log in to the doctor panel.
+2. Enter a patient's token ID to view their history and prior prescriptions.
+3. Add a new prescription after consultation.
 
-1. **Patient Records**
-   - Maintain comprehensive electronic health records for each patient.
-   - Include information about allergies, previous illnesses, and surgeries.
+---
 
-2. **Multi-User Roles**
-   - Differentiate between roles such as receptionist, and doctor.
-   - Assigned specific permissions and access levels based on roles.
-
-3. **Prescription History**
-   - Maintain a detailed history of prescriptions for each patient.
-
-## Addtional Features
-- The Patient can give the phone to retrieve the details so that if the patient came at night then he can visit next day with same token id
-- If the Token id is lost then the patient can provide the phone number to retrive the all details
